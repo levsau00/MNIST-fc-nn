@@ -1,20 +1,20 @@
 import numpy as np
+import mnist
 import matplotlib.pyplot as plt
-import gzip
-
-files = ["MNIST\mnist-train-images.gz","MNIST\mnist-train-labels.gz","MNIST\mnist-test-images.gz","MNIST\mnist-test-labels.gz"]
-
 
 def load_data():
-    with gzip.GzipFile(files[0]) as f:
-        X_train = np.fromfile(f)
-    with gzip.GzipFile(files[1]) as f:
-        Y_train = np.fromfile(f)
-    with gzip.GzipFile(files[2]) as f:
-        X_test = np.fromfile(f)
-    with gzip.GzipFile(files[3]) as f:
-        Y_test = np.fromfile(f)
+    X_train = np.reshape(mnist.train_images(),(60000,784))
+    Y_train = mnist.train_labels()
+    X_test = np.reshape(mnist.test_images(),(10000,784))
+    Y_test = mnist.test_labels()
+    
+    
     return X_train,Y_train,X_test,Y_test
 
 X_train,Y_train,X_test,Y_test = load_data()
 print(X_test.shape,X_train.shape)
+print(Y_test.shape,Y_train.shape)
+print(Y_test)
+
+
+
