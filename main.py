@@ -1,6 +1,7 @@
 import numpy as np
 import mnist
 import matplotlib.pyplot as plt
+from nn import fcnn
 
 
 def to_onehot(labels):
@@ -21,6 +22,7 @@ X_train,Y_train,X_test,Y_test = load_data()
 print(X_test.shape,X_train.shape)
 print(Y_test.shape,Y_train.shape)
 
-
+net = fcnn()
+print(net.forward(X_train[10]))
 
 
