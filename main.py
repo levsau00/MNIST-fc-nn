@@ -3,17 +3,11 @@ import mnist
 import matplotlib.pyplot as plt
 from nn import fcnn
 
-
-def to_onehot(labels):
-    onehot = np.zeros((labels.size,10))
-    onehot[np.arange(labels.size),labels] = 1
-    return onehot
-
 def load_data():
     X_train = np.reshape(mnist.train_images(),(60000,784))
-    Y_train = to_onehot(mnist.train_labels())
+    Y_train = np.reshape(mnist.train_labels(),(60000))
     X_test = np.reshape(mnist.test_images(),(10000,784))
-    Y_test = to_onehot(mnist.test_labels())
+    Y_test = np.reshape(mnist.test_labels(),(10000))
     
     
     return X_train,Y_train,X_test,Y_test
@@ -24,5 +18,6 @@ X_train,Y_train,X_test,Y_test = load_data()
 
 net = fcnn()
 print("forward output:",net.forward(X_train[10]))
+print(X_test[0].shape)
 
 

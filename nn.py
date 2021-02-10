@@ -8,7 +8,10 @@ def softmax(z):
     num = np.exp(z-np.max(z))
     denom = np.sum(num)
     return num/denom 
-
+def to_onehot(label):
+    onehot = np.zeros(10)
+    onehot[label] = 1
+    return onehot
     
 
 # network definition
@@ -29,9 +32,14 @@ class fcnn:
 
         z2 = self.w2.dot(self.layer1) + self.b2
         self.layer2 = softmax(z2)
-        print("z1:",z1,"\nz2:",z2)
+        print("z1:",z1.shape,"\nz2:",z2.shape)
         
         return self.layer2
 
-    def backward(self):
-        return None
+    def backward(self, Y):
+        dz2 = self.layer2 - Y
+        dw2 = dz2.dot(self.layer1.T)
+        db2 = dz2
+        da1 = self.w2.dot(dz2)
+
+        return dw1,db1,dw2,db2
