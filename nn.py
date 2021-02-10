@@ -32,3 +32,6 @@ class fcnn:
         print("z1:",z1,"\nz2:",z2)
         
         return self.layer2
+
+    def backward(self):
+        return None
