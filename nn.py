@@ -1,16 +1,17 @@
 import numpy as np
 
+# activation functions
 def relu(z): 
     z = np.maximum(z,0)
     return z
 def softmax(z):    
-    num = np.exp(z)
+    num = np.exp(z-np.max(z))
     denom = np.sum(num)
     return num/denom 
 
-def sigmoid(z):
-    return 1.0/(1.0 + np.exp(-z))
+    
 
+# network definition
 class fcnn:
     def __init__(self):
         self.layer1 = np.ndarray((10,1))
