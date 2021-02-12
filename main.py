@@ -12,6 +12,7 @@ def load_data():
     
     return X_train,Y_train,X_test,Y_test
 
+
 X_train,Y_train,X_test,Y_test = load_data()
 #print(X_test.shape,X_train.shape)
 #print(Y_test.shape,Y_train.shape)

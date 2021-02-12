@@ -58,6 +58,7 @@ class fcnn:
         dw1,db1,dw2,db2 = 0,0,0,0
         for X,Y in batch:
             _ = self.forward(X)
+            prediction = np.argmax(self.layer2,0)
             dw1,db1,dw2,db2 += self.backward(X,Y)
         self.update_params(dw1,db1,dw2,db2)
 
