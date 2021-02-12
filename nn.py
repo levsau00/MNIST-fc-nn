@@ -17,7 +17,7 @@ def d_relu(z):
 
 # network definition
 class fcnn:
-    def __init__(self):
+    def __init__(self,learning_rate = 0.05):
         self.layer1 = np.ndarray((10,1))
         self.layer2 = np.ndarray((10,1))
         self.w1 = np.random.rand(10,784) - 0.5
@@ -26,6 +26,7 @@ class fcnn:
         self.b2 = np.random.rand(10) - 0.5
         self.z1 = np.ndarray((10,1))
         self.z2 = np.ndarray((10,1))
+        self.learning_rate = learning_rate
 
     def forward(self,X):
         self.z1 = self.w1.dot(X) + self.b1
@@ -46,3 +47,9 @@ class fcnn:
         db1 = dz1
 
         return dw1,db1,dw2,db2
+    
+    def update_params(self,dw1,db1,dw2,db2):
+        self.w1 -= self.learning_rate*dw1
+        self.b1 -= self.learning_rate*db1
+        self.w2 -= self.learning_rate*dw2
+        self.b2 -= self.learning_rate*db2
