@@ -53,3 +53,12 @@ class fcnn:
         self.b1 -= self.learning_rate*db1
         self.w2 -= self.learning_rate*dw2
         self.b2 -= self.learning_rate*db2
+
+    def batch_back(self, batch):
+        dw1,db1,dw2,db2 = 0,0,0,0
+        for X,Y in batch:
+            _ = self.forward(X)
+            dw1,db1,dw2,db2 += self.backward(X,Y)
+        self.update_params(dw1,db1,dw2,db2)
+
+            
