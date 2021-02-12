@@ -12,7 +12,8 @@ def to_onehot(label):
     onehot = np.zeros(10)
     onehot[label] = 1
     return onehot
-    
+def d_relu(z):
+    return z>0
 
 # network definition
 class fcnn:
@@ -23,23 +24,25 @@ class fcnn:
         self.w2 = np.random.rand(10,10) - 0.5
         self.b1 = np.random.rand(10) - 0.5
         self.b2 = np.random.rand(10) - 0.5
-
-    
+        self.z1 = np.ndarray((10,1))
+        self.z2 = np.ndarray((10,1))
 
     def forward(self,X):
-        z1 = self.w1.dot(X) + self.b1
-        self.layer1 = relu(z1)
+        self.z1 = self.w1.dot(X) + self.b1
+        self.layer1 = relu(self.z1)
 
-        z2 = self.w2.dot(self.layer1) + self.b2
-        self.layer2 = softmax(z2)
-        print("z1:",z1.shape,"\nz2:",z2.shape)
+        self.z2 = self.w2.dot(self.layer1) + self.b2
+        self.layer2 = softmax(self.z2)
+        print("z1:",self.z1.shape,"\nz2:",self.z2.shape)
         
         return self.layer2
 
-    def backward(self, Y):
-        dz2 = self.layer2 - Y
+    def backward(self, X, Y):
+        dz2 = self.layer2 - to_onehot(Y)
         dw2 = dz2.dot(self.layer1.T)
         db2 = dz2
-        da1 = self.w2.dot(dz2)
+        dz1 = self.w2.dot(dz2) * d_relu(self.z1)
+        dw1 = np.reshape(dz1,(dz1.shape[0],1)).dot(np.reshape(X, (1,X.shape[0])))
+        db1 = dz1
 
         return dw1,db1,dw2,db2

@@ -18,6 +18,7 @@ X_train,Y_train,X_test,Y_test = load_data()
 
 net = fcnn()
 print("forward output:",net.forward(X_train[10]))
-print(X_test[0].shape)
+print(net.backward(X_train[10],Y_train[10]).shape)
+#print(X_test[0].shape)
 
 
