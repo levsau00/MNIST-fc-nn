@@ -34,7 +34,7 @@ class fcnn:
 
         self.z2 = self.w2.dot(self.layer1) + self.b2
         self.layer2 = softmax(self.z2)
-        print("z1:",self.z1.shape,"\nz2:",self.z2.shape)
+        #print("z1:",self.z1.shape,"\nz2:",self.z2.shape)
         
         return self.layer2
 
@@ -54,17 +54,31 @@ class fcnn:
         self.w2 -= self.learning_rate*dw2
         self.b2 -= self.learning_rate*db2
 
-    def batch_back(self, batch):
+    def batch_back(self, X_batch, Y_batch):
         Dw1,Db1,Dw2,Db2 = 0,0,0,0
-        for X,Y in batch:
+        predictions = np.ndarray(0)
+        for X,Y in zip(X_batch,Y_batch):
             _ = self.forward(X)
-            prediction = np.argmax(self.layer2,0)
+            predictions = np.append(predictions,np.argmax(self.layer2,0))
             dw1,db1,dw2,db2 = self.backward(X,Y)
             Dw1 += dw1
             Db1 += db1
             Dw2 += dw2
             Db2 += db2
         self.update_params(Dw1,Db1,Dw2,Db2)
+        print(predictions.shape,Y_batch.shape)
+        accuracy = predictions == Y_batch
+        print(accuracy)
+        accuracy = np.sum(accuracy)/accuracy.shape[0]
+        return accuracy
 
-    def grad_descent(self):
+    def grad_descent(self, X, Y, batch_size = 10):
+        num_batches = int(X.shape[0]/batch_size)
+        start_ind = 0
+        for b in range(num_batches):
+            X_batch = X[start_ind:batch_size*(b+1)]
+            Y_batch = Y[start_ind:batch_size*(b+1)]
+            batch_results  = self.batch_back(X_batch,Y_batch)
+            print(f"batch {b+1}: {batch_results*100}% Accuracy.")
+            start_ind += batch_size   
         return 1

@@ -18,8 +18,9 @@ print(X_test.shape,X_train.shape)
 #print(Y_test.shape,Y_train.shape)
 
 net = fcnn()
-print("forward output:",net.forward(X_train[10]))
-print("backward output:",net.backward(X_train[10],Y_train[10]))
+#print("forward output:",net.forward(X_train[10]))
+#print("backward output:",net.backward(X_train[10],Y_train[10]))
 #print(X_test[0].shape)
+net.grad_descent(X_train,Y_train)
 
 
