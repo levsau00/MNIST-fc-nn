@@ -14,12 +14,12 @@ def load_data():
 
 
 X_train,Y_train,X_test,Y_test = load_data()
-#print(X_test.shape,X_train.shape)
+print(X_test.shape,X_train.shape)
 #print(Y_test.shape,Y_train.shape)
 
 net = fcnn()
 print("forward output:",net.forward(X_train[10]))
-print(net.backward(X_train[10],Y_train[10]).shape)
+print("backward output:",net.backward(X_train[10],Y_train[10]))
 #print(X_test[0].shape)
 
 

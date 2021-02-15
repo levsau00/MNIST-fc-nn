@@ -55,11 +55,16 @@ class fcnn:
         self.b2 -= self.learning_rate*db2
 
     def batch_back(self, batch):
-        dw1,db1,dw2,db2 = 0,0,0,0
+        Dw1,Db1,Dw2,Db2 = 0,0,0,0
         for X,Y in batch:
             _ = self.forward(X)
             prediction = np.argmax(self.layer2,0)
-            dw1,db1,dw2,db2 += self.backward(X,Y)
-        self.update_params(dw1,db1,dw2,db2)
+            dw1,db1,dw2,db2 = self.backward(X,Y)
+            Dw1 += dw1
+            Db1 += db1
+            Dw2 += dw2
+            Db2 += db2
+        self.update_params(Dw1,Db1,Dw2,Db2)
 
-            
+    def grad_descent(self):
+        return 1
